@@ -8,7 +8,7 @@ from cachetools import TTLCache
 
 class ThrottlingMiddleware(BaseMiddleware):
     caches = {
-        "default": TTLCache(maxsize=10_000, ttl=5)
+        "default": TTLCache(maxsize=10_000, ttl=1)
     }
 
     async def __call__(

@@ -1,5 +1,5 @@
 [Unit]
-Description=Bot Template
+Description=Bot Recipes
 After=multi-user.target
 
 [Service]
@@ -7,7 +7,7 @@ User=root
 Group=admin
 Type=simple
 #WorkingDirectory=/opt/tgbot
-ExecStart=/root/aiogram_v3_template/venv/bin/python /root/aiogram_v3_template/bot.py
+ExecStart=/root/tgbot_recipes/venv/bin/python /root/tgbot_recipes/bot.py
 Restart=always
 
 [Install]
