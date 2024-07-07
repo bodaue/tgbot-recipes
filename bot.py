@@ -8,8 +8,7 @@ from aiogram.utils.callback_answer import CallbackAnswerMiddleware
 
 from tgbot.config import config
 from tgbot.db.db import init_db, close_db
-from tgbot.handlers.admin import admin_router
-from tgbot.handlers.user import user_router
+from tgbot.handlers.users.user import user_router
 from tgbot.middlewares.throttling import ThrottlingMiddleware
 from tgbot.middlewares.user import DBUserMiddleware
 from tgbot.misc.logger import register_logger, logger
@@ -43,7 +42,7 @@ async def main():
 
     storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
-    dp.include_routers(user_router, admin_router)
+    dp.include_routers(user_router)
 
     register_global_middlewares(dp=dp)
 

@@ -8,10 +8,10 @@ from tgbot.db.models.user import User as DBUser
 
 class DBUserMiddleware(BaseMiddleware):
     async def __call__(
-        self,
-        handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-        event: Update,
-        data: Dict[str, Any],
+            self,
+            handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
+            event: Update,
+            data: Dict[str, Any],
     ) -> Any:
         telegram_user: User | None = data.get("event_from_user")
         user = await DBUser.get_or_create(
