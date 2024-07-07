@@ -6,7 +6,7 @@ After=multi-user.target
 User=root
 Group=admin
 Type=simple
-#WorkingDirectory=/opt/tgbot
+WorkingDirectory=/root/tgbot_recipes
 ExecStart=/root/tgbot_recipes/venv/bin/python /root/tgbot_recipes/bot.py
 Restart=always
 
