@@ -1,5 +1,3 @@
-from datetime import datetime
-
 from aiogram import Bot
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
@@ -16,8 +14,7 @@ from tgbot.db.db import init_db
 
 def schedule_tasks(scheduler: BaseScheduler):
     scheduler.add_job(func=notify_users_about_recipe,
-                      trigger=CronTrigger(day_of_week='mon', hour=18, minute=24),
-                      next_run_time=datetime.now())
+                      trigger=CronTrigger(day_of_week='mon', hour=9, minute=0))
 
 
 async def setup_scheduler():
