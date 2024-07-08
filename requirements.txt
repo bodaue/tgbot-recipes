@@ -12,7 +12,6 @@ certifi==2024.2.2
 click==8.1.7
 colorama==0.4.6
 frozenlist==1.4.1
-idna==3.6
 iso8601==1.1.0
 magic-filter==1.0.12
 multidict==6.0.5
