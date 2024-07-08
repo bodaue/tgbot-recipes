@@ -1,7 +1,12 @@
 from tortoise import Model, fields
 
 
-class TimeBasedModel(Model):
+class BaseModel(Model):
+    class Meta:
+        abstract = True
+
+
+class TimeBasedModel(BaseModel):
     class Meta:
         abstract = True
 

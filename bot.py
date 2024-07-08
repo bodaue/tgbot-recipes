@@ -48,6 +48,7 @@ async def main():
                                      password=config.redis.password))
     else:
         storage = MemoryStorage()
+
     dp = Dispatcher(storage=storage)
     dp.include_routers(user_router)
 

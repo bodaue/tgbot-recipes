@@ -9,9 +9,8 @@ class RecipeCategoryCallbackData(CallbackData, prefix='recipe_category'):
     category_id: int
 
 
-async def recipe_categories_keyboard() -> InlineKeyboardMarkup:
+def recipe_categories_keyboard(categories: list[RecipeCategory]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    categories = await RecipeCategory.all()
     for category in categories:
         builder.row(
             InlineKeyboardButton(text=category.name,
@@ -24,24 +23,25 @@ class RecipeCallbackData(CallbackData, prefix='recipe'):
     recipe_id: int
 
 
-async def recipes_keyboard(category_id: int) -> InlineKeyboardMarkup:
+def recipes_keyboard(recipes: list[Recipe]) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
-    recipes = await Recipe.filter(category_id=category_id).all()
     for recipe in recipes:
         builder.row(
             InlineKeyboardButton(text=recipe.title,
                                  callback_data=RecipeCallbackData(recipe_id=recipe.id).pack())
         )
-    # todo: back to categories list
-
+    builder.row(
+        InlineKeyboardButton(text="Назад",
+                             callback_data="back_to_recipe_categories")
+    )
     return builder.as_markup()
 
 
-async def current_recipe_keyboard(recipe: Recipe) -> InlineKeyboardMarkup:
+def current_recipe_keyboard(recipe: Recipe) -> InlineKeyboardMarkup:
     builder = InlineKeyboardBuilder()
     # maybe error: recipe.category is not int
     builder.row(
         InlineKeyboardButton(text="Назад",
-                             callback_data=RecipeCategoryCallbackData(category_id=recipe.category).pack())
+                             callback_data=RecipeCategoryCallbackData(category_id=recipe.category_id).pack())
     )
     return builder.as_markup()

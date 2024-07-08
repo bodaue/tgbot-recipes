@@ -15,9 +15,8 @@ class DBUserMiddleware(BaseMiddleware):
     ) -> Any:
         telegram_user: User | None = data.get("event_from_user")
         user = await DBUser.get_or_create(
-            defaults=dict(
-                name=telegram_user.full_name, username=telegram_user.username
-            ),
+            defaults=dict(name=telegram_user.full_name,
+                          username=telegram_user.username),
             id=telegram_user.id,
         )
 
