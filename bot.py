@@ -4,7 +4,9 @@ from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.memory import MemoryStorage
+from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
+from redis.asyncio import Redis
 
 from tgbot.config import config
 from tgbot.db.db import init_db, close_db
@@ -40,7 +42,12 @@ async def main():
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
 
-    storage = MemoryStorage()
+    if config.redis.use_redis:
+        storage = RedisStorage(Redis(host=config.redis.host,
+                                     port=config.redis.port,
+                                     password=config.redis.password))
+    else:
+        storage = MemoryStorage()
     dp = Dispatcher(storage=storage)
     dp.include_routers(user_router)
 

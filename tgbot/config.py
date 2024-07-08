@@ -21,15 +21,25 @@ class DBConfig(BaseSettings, env_prefix="DB_"):
         return self.host
 
 
+class RedisConfig(BaseSettings, env_prefix='REDIS_'):
+    use_redis: bool = False
+
+    host: str
+    port: int
+    password: str
+
+
 class Config(BaseModel):
     common: CommonConfig
     db: DBConfig
+    redis: RedisConfig
 
 
 def create_app_config() -> Config:
     return Config(
         common=CommonConfig(),
         db=DBConfig(),
+        redis=RedisConfig()
     )
 
 
