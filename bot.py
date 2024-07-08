@@ -8,7 +8,7 @@ from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
 from redis.asyncio import Redis
 
-from tgbot.config import config
+from tgbot.config import create_app_config, Config
 from tgbot.db.db import init_db, close_db
 from tgbot.handlers.users.user import user_router
 from tgbot.middlewares.throttling import ThrottlingMiddleware
@@ -18,9 +18,9 @@ from tgbot.misc.set_bot_commands import set_default_commands
 from tgbot.services import broadcaster
 
 
-async def on_startup(bot: Bot, admin_ids: list[int]):
-    await broadcaster.broadcast(bot, admin_ids, "Бот запущен!")
-    await init_db()
+async def on_startup(bot: Bot, config: Config):
+    await broadcaster.broadcast(bot, config.common.admins, "Бот запущен!")
+    await init_db(host=config.db.host.get_secret_value())
 
 
 async def on_shutdown():
@@ -36,6 +36,8 @@ def register_global_middlewares(dp: Dispatcher):
 
 async def main():
     register_logger()
+
+    config = create_app_config()
 
     bot = Bot(
         token=config.common.bot_token.get_secret_value(),
@@ -56,7 +58,7 @@ async def main():
 
     await set_default_commands(bot)
 
-    await on_startup(bot, config.common.admins)
+    await on_startup(bot, config=config)
     dp.shutdown.register(on_shutdown)
 
     await dp.start_polling(

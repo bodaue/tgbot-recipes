@@ -1,10 +1,10 @@
 from pydantic import SecretStr, BaseModel
-from pydantic_settings import BaseSettings as _BaseSettings, SettingsConfigDict
+from pydantic_settings import SettingsConfigDict, BaseSettings as _BaseSettings
 
 
 class BaseSettings(_BaseSettings):
     model_config = SettingsConfigDict(
-        extra="ignore", env_file=".env", env_file_encoding="utf-8"
+        extra="ignore", env_file='.env', env_file_encoding="utf-8"
     )
 
 
@@ -14,11 +14,7 @@ class CommonConfig(BaseSettings, env_prefix="COMMON_"):
 
 
 class DBConfig(BaseSettings, env_prefix="DB_"):
-    host: str
-
-    @property
-    def dsn(self):
-        return self.host
+    host: SecretStr
 
 
 class RedisConfig(BaseSettings, env_prefix='REDIS_'):
@@ -41,6 +37,3 @@ def create_app_config() -> Config:
         db=DBConfig(),
         redis=RedisConfig()
     )
-
-
-config = create_app_config()

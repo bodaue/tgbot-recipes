@@ -1,0 +1,14 @@
+[Unit]
+Description=Bot Recipes Scheduler
+After=multi-user.target
+
+[Service]
+User=root
+Group=admin
+Type=simple
+WorkingDirectory=/root/tgbot_recipes
+ExecStart=/root/tgbot_recipes/venv/bin/python /root/tgbot_recipes/scheduler.py
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

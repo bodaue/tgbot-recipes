@@ -1,6 +1,7 @@
-from .recipe import RecipeCategory, Recipe
+from .recipe import RecipeCategory, Recipe, SentRecipe
 from .user import User
 
 __all__ = ["User",
            "RecipeCategory",
-           "Recipe"]
+           "Recipe",
+           "SentRecipe"]

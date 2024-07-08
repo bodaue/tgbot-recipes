@@ -26,6 +26,8 @@ class Recipe(BaseModel):
     category = fields.ForeignKeyField("models.RecipeCategory",
                                       related_name="recipes")
 
+    sent: fields.ReverseRelation["SentRecipe"]
+
     def get_details(self) -> str:
         hours, remainder = divmod(self.preparation_time.total_seconds(), 3600)
         minutes = remainder // 60
@@ -39,3 +41,11 @@ class Recipe(BaseModel):
             f""
             f"<i>Время приготовления:</i> {preparation_time_str}"
         )
+
+
+class SentRecipe(BaseModel):
+    class Meta:
+        table = "sent_recipes"
+
+    id = fields.IntField(pk=True)
+    recipe = fields.OneToOneField("models.Recipe", related_name="sent", on_delete=fields.CASCADE)
