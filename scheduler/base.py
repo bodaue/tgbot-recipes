@@ -28,6 +28,6 @@ async def setup_scheduler():
     scheduler.ctx.add_instance(bot, declared_class=Bot)
     scheduler.ctx.add_instance(config, declared_class=Config)
 
-    await init_db(host=config.db.host.get_secret_value())
+    await init_db(dsn=config.db.build_dsn())
 
     return scheduler

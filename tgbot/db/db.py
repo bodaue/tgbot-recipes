@@ -1,9 +1,9 @@
 from tortoise import Tortoise
 
 
-def get_tortoise_orm_config(host: str) -> dict:
+def get_tortoise_orm_config(dsn: str) -> dict:
     return {
-        "connections": {"default": host},
+        "connections": {"default": dsn},
         "apps": {
             "models": {
                 "models": ["tgbot.db.models"],
@@ -13,8 +13,8 @@ def get_tortoise_orm_config(host: str) -> dict:
     }
 
 
-async def init_db(host: str) -> None:
-    await Tortoise.init(config=get_tortoise_orm_config(host=host))
+async def init_db(dsn: str) -> None:
+    await Tortoise.init(config=get_tortoise_orm_config(dsn=dsn))
     await Tortoise.generate_schemas()
 
 

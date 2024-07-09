@@ -14,7 +14,15 @@ class CommonConfig(BaseSettings, env_prefix="COMMON_"):
 
 
 class DBConfig(BaseSettings, env_prefix="DB_"):
-    host: SecretStr
+    username: str
+    password: SecretStr
+    name: str
+    host: str
+    port: str
+    driver: str
+
+    def build_dsn(self) -> str:
+        return f"{self.driver}://{self.username}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.name}"
 
 
 class RedisConfig(BaseSettings, env_prefix='REDIS_'):
