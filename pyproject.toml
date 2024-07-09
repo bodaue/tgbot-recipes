@@ -17,6 +17,12 @@ apscheduler-di = "^0.1.0"
 cachetools = "^5.3.3"
 redis = "^5.0.7"
 betterlogging = "^1.0.0"
+aerich = "^0.7.2"
+
+[tool.aerich]
+tortoise_orm = "tgbot.db.db.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "./."
 
 [build-system]
 requires = ["poetry-core"]
