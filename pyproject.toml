@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "tgbot-recipes"
+version = "0.1.0"
+description = ""
+authors = ["Timur Kerimov <tim-online@mail.ru>"]
+license = "MIT"
+package-mode = false
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiogram = "^3.10.0"
+tortoise-orm = { extras = ["asyncpg"], version = "^0.21.4" }
+pydantic-settings = "^2.3.4"
+apscheduler = "^3.10.4"
+apscheduler-di = "^0.1.0"
+cachetools = "^5.3.3"
+redis = "^5.0.7"
+betterlogging = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
