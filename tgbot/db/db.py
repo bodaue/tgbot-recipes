@@ -1,22 +1,22 @@
 from tortoise import Tortoise
 
+from tgbot.config import config
 
-def get_tortoise_orm_config(dsn: str) -> dict:
-    return {
-        "connections": {"default": dsn},
-        "apps": {
-            "models": {
-                "models": ["tgbot.db.models"],
-                "default_connection": "default",
-            },
+TORTOISE_ORM = {
+    "connections": {"default": config.db.build_dsn()},
+    "apps": {
+        "models": {
+            "models": ["tgbot.db.models", "aerich.models"],
+            "default_connection": "default",
         },
-    }
+    },
+}
 
 
-async def init_db(dsn: str) -> None:
-    await Tortoise.init(config=get_tortoise_orm_config(dsn=dsn))
-    await Tortoise.generate_schemas()
+async def init_db() -> None:
+    await Tortoise.init(config=TORTOISE_ORM)
+    # await Tortoise.generate_schemas()
 
 
-async def close_db():
+async def close_db() -> None:
     await Tortoise.close_connections()

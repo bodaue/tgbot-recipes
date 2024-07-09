@@ -8,7 +8,7 @@ from apscheduler_di import ContextSchedulerDecorator
 from tzlocal import get_localzone
 
 from scheduler.tasks import notify_users_about_recipe
-from tgbot.config import create_app_config, Config
+from tgbot.config import config
 from tgbot.db.db import init_db
 
 
@@ -18,7 +18,6 @@ def schedule_tasks(scheduler: BaseScheduler):
 
 
 async def setup_scheduler():
-    config = create_app_config()
     bot = Bot(token=config.common.bot_token.get_secret_value(),
               default=DefaultBotProperties(parse_mode=ParseMode.HTML))
 
@@ -26,8 +25,7 @@ async def setup_scheduler():
         AsyncIOScheduler(timezone=str(get_localzone()))
     )
     scheduler.ctx.add_instance(bot, declared_class=Bot)
-    scheduler.ctx.add_instance(config, declared_class=Config)
 
-    await init_db(dsn=config.db.build_dsn())
+    await init_db()
 
     return scheduler

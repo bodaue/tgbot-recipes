@@ -20,7 +20,7 @@ from tgbot.services import broadcaster
 
 async def on_startup(bot: Bot, config: Config):
     await broadcaster.broadcast(bot, config.common.admins, "Бот запущен!")
-    await init_db(dsn=config.db.build_dsn())
+    await init_db()
 
 
 async def on_shutdown():

@@ -45,3 +45,6 @@ def create_app_config() -> Config:
         db=DBConfig(),
         redis=RedisConfig()
     )
+
+
+config = create_app_config()
