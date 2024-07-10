@@ -19,6 +19,10 @@ redis = "^5.0.7"
 betterlogging = "^1.0.0"
 aerich = "^0.7.2"
 
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.10.1"
+ruff = "^0.5.1"
+
 [tool.aerich]
 tortoise_orm = "tgbot.db.db.TORTOISE_ORM"
 location = "./migrations"
