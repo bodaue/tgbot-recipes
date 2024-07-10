@@ -1,12 +1,13 @@
 import asyncio
 import logging
+from typing import Iterable
 
 from aiogram import Bot
 from aiogram import exceptions
 
 
 async def send_message(
-    bot: Bot, user_id, text: str, disable_notification: bool = False
+    bot: Bot, user_id: int, text: str, disable_notification: bool = False
 ) -> bool:
     try:
         await bot.send_message(user_id, text, disable_notification=disable_notification)
@@ -26,7 +27,7 @@ async def send_message(
     return False
 
 
-async def broadcast(bot, users, text) -> int:
+async def broadcast(bot: Bot, users: Iterable[int], text: str) -> int:
     """
     Simple broadcaster
     :return: Count of messages

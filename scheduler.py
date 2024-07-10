@@ -5,7 +5,7 @@ from scheduler.base import setup_scheduler, schedule_tasks
 from tgbot.db.db import close_db
 
 
-async def main():
+async def main() -> None:
     logging.basicConfig(
         level=logging.INFO,
         format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",

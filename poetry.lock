@@ -977,6 +977,17 @@ asyncpg = ["asyncpg"]
 psycopg = ["psycopg[binary,pool] (>=3.0.12,<4.0.0)"]
 
 [[package]]
+name = "types-cachetools"
+version = "5.3.0.7"
+description = "Typing stubs for cachetools"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "types-cachetools-5.3.0.7.tar.gz", hash = "sha256:27c982cdb9cf3fead8b0089ee6b895715ecc99dac90ec29e2cab56eb1aaf4199"},
+    {file = "types_cachetools-5.3.0.7-py3-none-any.whl", hash = "sha256:98c069dc7fc087b1b061703369c80751b0a0fc561f6fb072b554e5eee23773a0"},
+]
+
+[[package]]
 name = "typing-extensions"
 version = "4.12.2"
 description = "Backported and Experimental Type Hints for Python 3.8+"
@@ -1121,4 +1132,4 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "4a6afab3116cc09423682faae149654687d4012b3665ad3c460ca960c9ff75cf"
+content-hash = "f6898e23808f5b5db681478e7230499cdc9cd602f69e176a7eb0d3f31425479a"

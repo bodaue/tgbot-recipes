@@ -12,14 +12,14 @@ from tgbot.config import config
 from tgbot.db.db import init_db
 
 
-def schedule_tasks(scheduler: BaseScheduler):
+def schedule_tasks(scheduler: BaseScheduler) -> None:
     scheduler.add_job(
         func=notify_users_about_recipe,
         trigger=CronTrigger(day_of_week="mon", hour=9, minute=0),
     )
 
 
-async def setup_scheduler():
+async def setup_scheduler() -> ContextSchedulerDecorator:
     bot = Bot(
         token=config.common.bot_token.get_secret_value(),
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),

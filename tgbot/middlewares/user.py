@@ -13,7 +13,7 @@ class DBUserMiddleware(BaseMiddleware):
         event: TelegramObject,
         data: Dict[str, Any],
     ) -> Any:
-        telegram_user: User = data.get("event_from_user")
+        telegram_user: User = data["event_from_user"]
         user = await DBUser.get_or_create(
             defaults=dict(
                 name=telegram_user.full_name, username=telegram_user.username

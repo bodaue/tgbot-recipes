@@ -3,6 +3,7 @@ import asyncio
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from aiogram.fsm.storage.base import BaseStorage
 from aiogram.fsm.storage.memory import MemoryStorage
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
@@ -18,23 +19,23 @@ from tgbot.misc.set_bot_commands import set_default_commands
 from tgbot.services import broadcaster
 
 
-async def on_startup(bot: Bot):
+async def on_startup(bot: Bot) -> None:
     await broadcaster.broadcast(bot, config.common.admins, "Бот запущен!")
     await init_db()
 
 
-async def on_shutdown():
+async def on_shutdown() -> None:
     await close_db()
 
 
-def register_global_middlewares(dp: Dispatcher):
+def register_global_middlewares(dp: Dispatcher) -> None:
     dp.update.outer_middleware(DBUserMiddleware())
 
     dp.message.middleware(ThrottlingMiddleware())
     dp.callback_query.middleware(CallbackAnswerMiddleware())
 
 
-async def main():
+async def main() -> None:
     register_logger()
 
     bot = Bot(
@@ -42,6 +43,8 @@ async def main():
         default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
     await set_default_commands(bot)
+
+    storage: BaseStorage
 
     if config.redis.use_redis:
         storage = RedisStorage(

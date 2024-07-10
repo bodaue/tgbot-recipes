@@ -15,6 +15,7 @@ pydantic-settings = "^2.3.4"
 apscheduler = "^3.10.4"
 apscheduler-di = "^0.1.0"
 cachetools = "^5.3.3"
+types-cachetools = "^5.3.0.7"
 redis = "^5.0.7"
 betterlogging = "^1.0.0"
 aerich = "^0.7.2"
@@ -27,6 +28,12 @@ ruff = "^0.5.1"
 tortoise_orm = "tgbot.db.db.TORTOISE_ORM"
 location = "./migrations"
 src_folder = "./."
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+strict = true
+follow_imports = "normal"
+ignore_missing_imports = true
 
 [build-system]
 requires = ["poetry-core"]
