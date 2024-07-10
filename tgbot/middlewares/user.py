@@ -10,10 +10,10 @@ class DBUserMiddleware(BaseMiddleware):
     async def __call__(
             self,
             handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-            event: Update,
+            event: TelegramObject,
             data: Dict[str, Any],
     ) -> Any:
-        telegram_user: User | None = data.get("event_from_user")
+        telegram_user: User = data.get("event_from_user")
         user = await DBUser.get_or_create(
             defaults=dict(name=telegram_user.full_name,
                           username=telegram_user.username),
