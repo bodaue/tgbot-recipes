@@ -7,21 +7,19 @@ from cachetools import TTLCache
 
 
 class ThrottlingMiddleware(BaseMiddleware):
-    caches: dict[str, TTLCache] = {
-        "default": TTLCache(maxsize=10_000, ttl=1)
-    }
+    caches: dict[str, TTLCache] = {"default": TTLCache(maxsize=10_000, ttl=1)}
 
     async def __call__(
-            self,
-            handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
-            event: TelegramObject,
-            data: Dict[str, Any],
+        self,
+        handler: Callable[[Message, Dict[str, Any]], Awaitable[Any]],
+        event: TelegramObject,
+        data: Dict[str, Any],
     ) -> Any:
         event = cast(Message, event)
         throttling_key = get_flag(data, "throttling_key")
         if throttling_key is not None and throttling_key in self.caches:
             if event.chat.id in self.caches[throttling_key]:
-                await event.answer('<b>Не пишите так часто!</b>')
+                await event.answer("<b>Не пишите так часто!</b>")
                 return
             else:
                 self.caches[throttling_key][event.chat.id] = None

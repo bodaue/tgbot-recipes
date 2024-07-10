@@ -23,15 +23,18 @@ class Recipe(BaseModel):
     description = fields.TextField()
     ingredients = fields.TextField()
     preparation_time = fields.TimeDeltaField()
-    category: fields.ForeignKeyRelation[RecipeCategory] = fields.ForeignKeyField("models.RecipeCategory",
-                                                                                 related_name="recipes")
+    category: fields.ForeignKeyRelation[RecipeCategory] = fields.ForeignKeyField(
+        "models.RecipeCategory", related_name="recipes"
+    )
 
     sent: fields.ReverseRelation["SentRecipe"]
 
     def get_details(self) -> str:
         hours, remainder = divmod(self.preparation_time.total_seconds(), 3600)
         minutes = remainder // 60
-        preparation_time_str = f"{int(hours)} ч {int(minutes)} мин" if hours else f"{int(minutes)} мин"
+        preparation_time_str = (
+            f"{int(hours)} ч {int(minutes)} мин" if hours else f"{int(minutes)} мин"
+        )
         return (
             f"<b>Рецепт:</b> {self.title}\n"
             f"{self.description}\n\n"
@@ -48,6 +51,6 @@ class SentRecipe(BaseModel):
         table = "sent_recipes"
 
     id = fields.IntField(pk=True)
-    recipe: fields.OneToOneRelation[Recipe] = fields.OneToOneField("models.Recipe",
-                                                                   related_name="sent",
-                                                                   on_delete=fields.CASCADE)
+    recipe: fields.OneToOneRelation[Recipe] = fields.OneToOneField(
+        "models.Recipe", related_name="sent", on_delete=fields.CASCADE
+    )

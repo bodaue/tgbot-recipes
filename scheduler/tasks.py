@@ -13,14 +13,11 @@ async def notify_users_about_recipe(bot: Bot) -> None:
         return
 
     users = await User.all()
-    text = ('<b>Уведомление о рецепте!</b>\n\n'
-            ''
-            '{}'.format(recipe.get_details()))
+    text = "<b>Уведомление о рецепте!</b>\n\n" "" "{}".format(recipe.get_details())
     for user in users:
         try:
-            await bot.send_message(chat_id=user.id,
-                                   text=text)
+            await bot.send_message(chat_id=user.id, text=text)
         except TelegramAPIError as e:
-            logging.error(f'Error sending message to user {user.id}: {e}')
+            logging.error(f"Error sending message to user {user.id}: {e}")
 
     await SentRecipe.create(recipe=recipe)

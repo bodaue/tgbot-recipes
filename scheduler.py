@@ -8,7 +8,7 @@ from tgbot.db.db import close_db
 async def main():
     logging.basicConfig(
         level=logging.INFO,
-        format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
+        format="%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s",
     )
 
     scheduler = await setup_scheduler()
@@ -19,10 +19,10 @@ async def main():
         await asyncio.sleep(100)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     try:
         asyncio.run(main())
     except (KeyboardInterrupt, SystemExit):
-        logging.info('Exited')
+        logging.info("Exited")
     finally:
         asyncio.run(close_db())

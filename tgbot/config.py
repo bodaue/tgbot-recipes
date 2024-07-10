@@ -4,7 +4,7 @@ from pydantic_settings import SettingsConfigDict, BaseSettings as _BaseSettings
 
 class BaseSettings(_BaseSettings):
     model_config = SettingsConfigDict(
-        extra="ignore", env_file='.env', env_file_encoding="utf-8"
+        extra="ignore", env_file=".env", env_file_encoding="utf-8"
     )
 
 
@@ -22,10 +22,11 @@ class DBConfig(BaseSettings, env_prefix="DB_"):
     driver: str
 
     def build_dsn(self) -> str:
-        return f"{self.driver}://{self.username}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.name}"
+        return "sqlite://recipes.db"
+        # return f"{self.driver}://{self.username}:{self.password.get_secret_value()}@{self.host}:{self.port}/{self.name}"
 
 
-class RedisConfig(BaseSettings, env_prefix='REDIS_'):
+class RedisConfig(BaseSettings, env_prefix="REDIS_"):
     use_redis: bool = False
 
     host: str
@@ -40,11 +41,7 @@ class Config(BaseModel):
 
 
 def create_app_config() -> Config:
-    return Config(
-        common=CommonConfig(),
-        db=DBConfig(),
-        redis=RedisConfig()
-    )
+    return Config(common=CommonConfig(), db=DBConfig(), redis=RedisConfig())
 
 
 config = create_app_config()

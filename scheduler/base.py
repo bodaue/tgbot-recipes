@@ -13,13 +13,17 @@ from tgbot.db.db import init_db
 
 
 def schedule_tasks(scheduler: BaseScheduler):
-    scheduler.add_job(func=notify_users_about_recipe,
-                      trigger=CronTrigger(day_of_week='mon', hour=9, minute=0))
+    scheduler.add_job(
+        func=notify_users_about_recipe,
+        trigger=CronTrigger(day_of_week="mon", hour=9, minute=0),
+    )
 
 
 async def setup_scheduler():
-    bot = Bot(token=config.common.bot_token.get_secret_value(),
-              default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    bot = Bot(
+        token=config.common.bot_token.get_secret_value(),
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
+    )
 
     scheduler = ContextSchedulerDecorator(
         AsyncIOScheduler(timezone=str(get_localzone()))

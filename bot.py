@@ -39,14 +39,18 @@ async def main():
 
     bot = Bot(
         token=config.common.bot_token.get_secret_value(),
-        default=DefaultBotProperties(parse_mode=ParseMode.HTML)
+        default=DefaultBotProperties(parse_mode=ParseMode.HTML),
     )
     await set_default_commands(bot)
 
     if config.redis.use_redis:
-        storage = RedisStorage(Redis(host=config.redis.host,
-                                     port=config.redis.port,
-                                     password=config.redis.password))
+        storage = RedisStorage(
+            Redis(
+                host=config.redis.host,
+                port=config.redis.port,
+                password=config.redis.password,
+            )
+        )
     else:
         storage = MemoryStorage()
 

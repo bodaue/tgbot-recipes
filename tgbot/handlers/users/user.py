@@ -18,5 +18,6 @@ async def user_start(message: Message, state: FSMContext):
     name = message.from_user.first_name
     await message.answer(
         text=f"<b>Привет, {name}!</b>\n" f"Используй клавиатуру для работы с ботом ⬇️",
-        reply_markup=start_keyboard())
+        reply_markup=start_keyboard(),
+    )
     await state.clear()
